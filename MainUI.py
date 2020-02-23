@@ -1,9 +1,20 @@
+"""
+ * Functionnal Video Therapy
+ * Version - 0.2
+ * All right reserved
+ *
+ * Copyright (c) 2019 Alain Carrot for the coding part,
+ * Tullins's innovation team for the concept.
+ */
+"""
+
 from tkinter import *
 from tkinter import ttk
 import SQLManager
 import os
 import MovieManager
 import subprocess
+import CompModules
 
 handSideClic = "0"
 colorChoosen = "0"
@@ -21,6 +32,9 @@ def repertoire_videos():  # in menu
     path = "Videos"
     path = os.path.realpath(path)
     os.startfile(path)
+
+def about_call(): #call a function in CompModules that will show a window with Credits
+    CompModules.about_window()
 
 # about side choosen : the clic will call clic_main gauche or droite that will call Side Hand Clic Action, that will finaly call ChoseIntegrator
 def clic_main_gauche():
@@ -289,7 +303,7 @@ file_menu.add_command(label="Répertoire des vidéos", command=repertoire_videos
 aide_menu = Menu(menu_bar, tearoff=0)
 aide_menu.add_command(label="Manuel d'utilisateur")
 aide_menu.add_command(label="Manuel d'administrateur")
-aide_menu.add_command(label="Crédits")
+aide_menu.add_command(label="Crédits", command=about_call)
 
 menu_bar.add_cascade(label="Outils", menu=file_menu)
 menu_bar.add_cascade(label="Aide", menu=aide_menu)
