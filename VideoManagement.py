@@ -25,6 +25,9 @@ def add_video():
 
 def mod_video():
     print("mod video")
+    global index_selected
+    subprocess.call(['python', 'modvideo.py', index_selected])
+
 def del_video():
     global index_selected
     SQLManager.delete_vid(index_selected)

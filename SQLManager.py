@@ -87,6 +87,18 @@ def delete_vid(id_of_object):  # will add new entry in database
     connection.commit()
     connection.close()
 
+def find_vid_by_id(id_of_object):  # will add new entry in database
+
+    connection = sqlite3.connect("video_db.db")
+    cursor = connection.cursor()
+
+    format_str = """SELECT * FROM list_of_videos WHERE id_video=?"""
+
+    cursor.execute(format_str, (id_of_object,))
+    print("Recupération de l'item n°",id_of_object)
+    result = cursor.fetchall()
+    connection.close()
+    return result
 
 def tri_and_title(side, color):
     HandSide = side
@@ -145,11 +157,12 @@ def find_by_id_to_filename_list(list_of_actions,side, color): #takes the list of
     connection.close()
 
 
+
+
+
 #################################
 ##On table list_of_sequences
 #################################
-
-
 
 def retrive_sequence(sequence_name, side, color): #find the pâth of a video according to actionname, side and color
     HandSide = side
