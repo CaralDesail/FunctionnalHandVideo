@@ -140,7 +140,7 @@ def ValidateRightFrame():  # function called when Button in right frame is click
     list_of_actions_to_play=SQLManager.sequence_to_list(Sequence_Chosen) #then retrive list of names
     list_of_filepath = SQLManager.find_by_id_to_filename_list(list_of_actions_to_play, handSideClic, colorChoosen) #retrive the filename lsit
     #print("La liste des adresses : ",list_of_filepath)
-    MovieManager.multiple_different_videos(list_of_filepath)
+    MovieManager.multiple_different_videos_vlc(list_of_filepath)
 
 
 ### UI with Tkinter
