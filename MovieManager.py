@@ -1,4 +1,4 @@
-from moviepy.editor import *
+
 import os
 os.add_dll_directory(r'C:\Program Files\VideoLAN\VLC')
 from time import sleep
@@ -7,6 +7,7 @@ from time import sleep
 MoviePyUse=False
 if MoviePyUse: # we use moviepy
     import pygame
+    from moviepy.editor import *
 else : #we use vlc
     import vlc
 
