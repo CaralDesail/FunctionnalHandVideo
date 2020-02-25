@@ -34,7 +34,7 @@ try: # if it is ok, that is to say sys.argv has return someting valid, indexSel 
     indexSel=int(sys.argv[1])
     print("argument passé :", indexSel)
 except IndexError: # if exception
-    indexSel=99
+    indexSel=9999
     print("appel direct du script donc index par défaut à ",indexSel)
 
 

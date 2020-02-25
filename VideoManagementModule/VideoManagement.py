@@ -21,12 +21,12 @@ def OnSelectList(event):
 
 
 def add_video():
-    subprocess.call("python addvideo.py")
+    subprocess.call("python VideoManagementModule/addvideo.py")
 
 def mod_video():
     print("mod video")
     global index_selected
-    subprocess.call(['python', 'modvideo.py', index_selected])
+    subprocess.call(['python', 'VideoManagementModule/modvideo.py', index_selected])
 
 def del_video():
     global index_selected

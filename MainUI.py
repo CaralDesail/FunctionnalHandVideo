@@ -24,7 +24,7 @@ LeftSelectedAction = ""
 
 def video_management_opening():  # in menu
     print("Ouverture du gestionnaire de videos")
-    subprocess.call("python VideoManagement.py")
+    subprocess.call("python VideoManagementModule/VideoManagement.py")
      # call other windows that contain video manager
 
 def repertoire_videos():  # in menu
@@ -32,6 +32,10 @@ def repertoire_videos():  # in menu
     path = "Videos"
     path = os.path.realpath(path)
     os.startfile(path)
+
+def sequences_management_opening(): #in menu, will call Sequences Management
+    print("Ouverture du gestionnaire de séquences")
+    subprocess.call("python SequencesManagementModule/SequencesManagement.py")
 
 def about_call(): #call a function in CompModules that will show a window with Credits
     CompModules.about_window()
@@ -299,6 +303,7 @@ menu_bar = Menu(window)
 file_menu = Menu(menu_bar, tearoff=0)
 file_menu.add_command(label="Gestion des videos", command=video_management_opening)
 file_menu.add_command(label="Répertoire des vidéos", command=repertoire_videos)
+file_menu.add_command(label="Gestion des Séquences", command=sequences_management_opening)
 
 aide_menu = Menu(menu_bar, tearoff=0)
 aide_menu.add_command(label="Manuel d'utilisateur")

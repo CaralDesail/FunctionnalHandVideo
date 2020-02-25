@@ -158,10 +158,14 @@ def find_by_id_to_filename_list(list_of_actions,side, color): #takes the list of
 
 
 
+#################################
+#################################
+#################################
 
+##On table list_of_sequences
 
 #################################
-##On table list_of_sequences
+#################################
 #################################
 
 def retrive_sequence(sequence_name, side, color): #find the pâth of a video according to actionname, side and color
@@ -176,9 +180,23 @@ def retrive_sequence(sequence_name, side, color): #find the pâth of a video acc
     for r in result:
        print(r)
     return result
-
     connection.close()
+
 #retrive_sequence("2Styl","r","w")
+
+def list_of_sequence():  # find the pâth of a video according to actionname, side and color
+
+    connection = sqlite3.connect("video_db.db")
+    cursor = connection.cursor()
+    cursor.execute(("SELECT * FROM list_of_sequences "),
+                   ())
+    result = cursor.fetchall()
+    for r in result:
+        print(r)
+    return result
+    connection.close()
+
+
 def sequence_to_list(sequence): #will give a list of videos from selected sequence
     print("entree en moulinette:",sequence[0][5])
     string_to_convert=sequence[0][5]
@@ -217,3 +235,15 @@ def sort_sequences_by_color_side_to_names(color,hand): #will return a lost of na
     connection.close()
 
 #sort_sequences_by_color_side_to_names("w","r")
+
+def delete_seq(id_of_object):  # will add new entry in database
+
+    connection = sqlite3.connect("video_db.db")
+    cursor = connection.cursor()
+
+    format_str = """DELETE FROM list_of_sequences WHERE id_sequence=?"""
+
+    cursor.execute(format_str, (id_of_object,))
+    print("Suppression de l'item n°",id_of_object)
+    connection.commit()
+    connection.close()
