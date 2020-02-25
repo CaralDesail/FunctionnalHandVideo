@@ -87,7 +87,7 @@ def delete_vid(id_of_object):  # will add new entry in database
     connection.commit()
     connection.close()
 
-def find_vid_by_id(id_of_object):  # will add new entry in database
+def find_vid_by_id(id_of_object):  # will find video through id
 
     connection = sqlite3.connect("video_db.db")
     cursor = connection.cursor()

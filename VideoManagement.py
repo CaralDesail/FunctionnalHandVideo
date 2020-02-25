@@ -3,6 +3,7 @@ from tkinter import ttk
 import SQLManager
 import re
 import subprocess
+import MovieManager
 
 
 index_selected=9999 # is the index of selected video (sql index, not listbox index that are differents ...
@@ -21,12 +22,12 @@ def OnSelectList(event):
 
 
 def add_video():
-    subprocess.call("python VideoManagementModule/addvideo.py")
+    subprocess.call("python VM_addvideo.py")
 
 def mod_video():
     print("mod video")
     global index_selected
-    subprocess.call(['python', 'VideoManagementModule/modvideo.py', index_selected])
+    subprocess.call(['python', 'VM_modvideo.py', index_selected])
 
 def del_video():
     global index_selected
@@ -40,12 +41,17 @@ def del_video():
         listeVideos.insert(item[0], label_in_list)
 
 def ref_video():
-    listeVideos.delete(0,END)
+    listeVideos.delete(0, END)
     my_list = SQLManager.readAll()
     for item in my_list:
         label_in_list = str(item[0]) + " : >" + item[1] + "< Coté : >" + item[2] + "< Couleur : >" + item[
             3] + "< Longueur : >" + str(item[4]) + "< Fichier : >" + item[5] + "< Date : >" + str(item[6])
         listeVideos.insert(item[0], label_in_list)
+
+def play_video():
+    global index_selected
+    item=SQLManager.find_vid_by_id(index_selected)
+    MovieManager.video_launch(item[0][5])
 
 windowVM = Tk()
 
@@ -99,8 +105,16 @@ refresh_button = Button(refresh_button_frame, text="Actualiser", border=1,font=(
 refresh_button_frame.grid(row=0, column=3)
 refresh_button.pack()
 
+play_button_frame=Frame(buttons_frame,padx=20)
+play_button = Button(play_button_frame, text="Jouer", border=1,font=("Helvetica", 12),command=play_video);
+play_button_frame.grid(row=0, column=4)
+play_button.pack()
+
 list_of_vid_frame.pack()
 buttons_frame.pack()
 listeVideos.pack()
+
+
+
 
 windowVM.mainloop()

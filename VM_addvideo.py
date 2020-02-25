@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
 import SQLManager
+import subprocess
 
 def recup_add_data(): # function that will use tkinter input to feed SQL database trougth SQLManager after check
     name = name_frame_value.get()
@@ -21,7 +22,9 @@ def recup_add_data(): # function that will use tkinter input to feed SQL databas
             print("Pas de résultats équivalent, enregistrement ok ")
             SQLManager.ajout_dyn(name, side, color, length, filename)
             messagebox.showinfo("Validation", "Enregistrement ok")
+
             add_video.quit()
+
         else :
             print("Un enregistrement existe déjà avec les mêmes références coleur, côté et action")
             print(SQLManager.retrive_video_path(name, side, color))
@@ -33,6 +36,7 @@ add_video = Tk()
 add_video.title("Ajout d'une vidéo")
 # window.geometry("1080x720")
 add_video.minsize(800, 300)
+add_video.maxsize(800, 300)
 add_video.iconbitmap("pictures/likeBlack.ico")
 add_video.config(background='#FFFFFF')
 
