@@ -7,8 +7,29 @@ import subprocess
 def recup_add_data():
     print("Ajout des données dans la table SQL")
 
-def OnSelectList():
-    print("OnSelectList")
+def OnSelectList(event):
+    print("changement de liste"+str(event))
+    w = event.widget
+    index = int(w.curselection()[0])
+    value = w.get(index)
+    print('You selected "%s"' % (value))
+    expr_reg=r"^[0-9]{1,5}"
+
+    global index_selected
+    index_selected=re.findall(expr_reg,value)[0] #will find the corresponding index with regular expression (THERE IS A MOST SIMPLE WAY TO DO IT but I didn't succeded)
+    print(index_selected)
+
+def SideAndColorChoseEvent(event): # when changes in color and side entry box, will recalculate what to show in video selection listbox
+    side=left_frame_value_side.get()
+    color=left_frame_value_color.get()
+
+    print("Le côté est :",side, " et la couleur ",color)
+    listeVideos.delete(0,END)
+    list_to_show=SQLManager.tri_and_title(side,color)
+    print(list_to_show)
+    for item in list_to_show:
+        label_in_list = str(item[0])+" : "+str(item[1]) +" : Longueur : " + str(item[4])
+        listeVideos.insert(item[0], label_in_list)
 
 add_sequence = Tk()
 add_sequence.title("Module de création de séquences")
@@ -35,6 +56,8 @@ left_frame_text_side_grid.grid(row=0, column=0)
 left_frame_value_side_grid=Frame(left_frame_t)
 left_frame_value_side = Entry(left_frame_value_side_grid, width=3)
 left_frame_value_side.pack()
+left_frame_value_side.bind('<FocusOut>',SideAndColorChoseEvent)
+left_frame_value_side.bind('<Return>',SideAndColorChoseEvent)
 left_frame_value_side_grid.grid(row=0, column=1)
 
 left_frame_text_color_grid=Frame(left_frame_t)
@@ -45,6 +68,8 @@ left_frame_text_color_grid.grid(row=0, column=2)
 left_frame_value_color_grid=Frame(left_frame_t)
 left_frame_value_color = Entry(left_frame_value_color_grid, width=3)
 left_frame_value_color.pack()
+left_frame_value_color.bind('<FocusOut>',SideAndColorChoseEvent)
+left_frame_value_color.bind('<Return>',SideAndColorChoseEvent)
 left_frame_value_color_grid.grid(row=0, column=3)
 
 list_of_vid_frame = Frame(left_frame_t, bg="#FFF0F0", border=2)
@@ -56,7 +81,7 @@ listeVideos = Listbox(list_of_vid_frame)
 listeVideos.configure(width=90,height=35)
 listeVideos.bind('<<ListboxSelect>>', OnSelectList)
 
-my_list=SQLManager.tri_and_title("d","b")
+my_list=SQLManager.readAll()
 print("Ma liste dans VM "+str(my_list))
 for item in my_list:
     label_in_list=str(item[0])+" : >"+item[1]+"< Coté : >"+item[2]+"< Couleur : >"+item[3]+"< Longueur : >"+str(item[4])+"< Fichier : >"+item[5]+"< Date : >"+str(item[6])
@@ -71,6 +96,17 @@ listeVideos.pack()
 left_frame_t.grid(row=0, column=0)
 
 
+center_frame = Frame(items_frame, border=1)
+center_text_d=Label(center_frame, text="=>", font=("Helvetica", 14), fg="black")
+center_text_d.pack()
+center_text_g=Label(center_frame, text="<=", font=("Helvetica", 14), fg="black")
+center_text_g.pack()
+center_text_h=Label(center_frame, text="^", font=("Helvetica", 18), fg="black")
+center_text_h.pack()
+center_text_b=Label(center_frame, text="v", font=("Helvetica", 14), fg="black")
+center_text_b.pack()
+center_frame.grid(row=0, column=1)
+
 
 right_frame_t = Frame(items_frame, border=1)
 
@@ -84,7 +120,32 @@ right_frame_value_title = Entry(right_frame_value_title_grid, width=30)
 right_frame_value_title.pack()
 right_frame_value_title_grid.grid(row=0, column=1)
 
-right_frame_t.grid(row=0, column=1)
+list_of_selected_vids_grid=Frame(right_frame_t)
+
+list_of_chosen_vid_frame = Frame(list_of_selected_vids_grid, bg="#FFF0F0", border=2)
+
+scrollbar_chosen_list = Scrollbar(list_of_chosen_vid_frame)
+scrollbar_chosen_list.pack(side=RIGHT, fill=Y)
+
+listeChosenVideos = Listbox(list_of_chosen_vid_frame)
+listeChosenVideos.configure(width=60, height=35)
+listeChosenVideos.bind('<<ListboxSelect>>', OnSelectList)
+
+my_list=SQLManager.readAll()
+print("Ma liste dans VM "+str(my_list))
+for item in my_list:
+    label_in_list=str(item[0])+" : >"+item[1]+"< Coté : >"+item[2]+"< Couleur : >"+item[3]+"< Longueur : >"+str(item[4])+"< Fichier : >"+item[5]+"< Date : >"+str(item[6])
+    listeChosenVideos.insert(item[0], label_in_list)
+
+# attach listbox to scrollbar
+listeChosenVideos.config(yscrollcommand=scrollbar_chosen_list.set)
+scrollbar_chosen_list.config(command=listeChosenVideos.yview)
+list_of_chosen_vid_frame.grid(row=1, column=0, columnspan=4)
+listeChosenVideos.pack()
+
+list_of_selected_vids_grid.grid(row=1,column=0,columnspan=2)
+
+right_frame_t.grid(row=0, column=2)
 
 
 
