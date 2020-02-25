@@ -129,7 +129,7 @@ def left_combo_action(event):  # function called when left combobox changes
 def ValidateLeftFrame():  # function called when Button in left frame is clicked
     print(All_Choosen_So_URL_Video())
     VideoURL=All_Choosen_So_URL_Video()
-    MovieManager.video_launch_vlc(VideoURL) #if vlc is not available, you can use MovieManager.video_launch(VideoURL) with moviepy
+    MovieManager.video_launch(VideoURL) #if vlc is not available, you can use MovieManager.video_launch(VideoURL) with moviepy
 
 
 
@@ -154,7 +154,7 @@ def ValidateRightFrame():  # function called when Button in right frame is click
     list_of_actions_to_play=SQLManager.sequence_to_list(Sequence_Chosen) #then retrive list of names
     list_of_filepath = SQLManager.find_by_id_to_filename_list(list_of_actions_to_play, handSideClic, colorChoosen) #retrive the filename lsit
     #print("La liste des adresses : ",list_of_filepath)
-    MovieManager.multiple_different_videos_vlc(list_of_filepath)
+    MovieManager.multiple_different_videos(list_of_filepath)
 
 
 ### UI with Tkinter
