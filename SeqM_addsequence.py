@@ -2,7 +2,6 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
 import SQLManager
-import subprocess
 
 def recup_add_data():
     print("Ajout des données dans la table SQL")
@@ -30,6 +29,9 @@ def SideAndColorChoseEvent(event): # when changes in color and side entry box, w
     for item in list_to_show:
         label_in_list = str(item[0])+" : "+str(item[1]) +" : Longueur : " + str(item[4])
         listeVideos.insert(item[0], label_in_list)
+
+def OnSelectChosenList():
+    print("on selected item")
 
 add_sequence = Tk()
 add_sequence.title("Module de création de séquences")
@@ -97,14 +99,15 @@ left_frame_t.grid(row=0, column=0)
 
 
 center_frame = Frame(items_frame, border=1)
-center_text_d=Label(center_frame, text="=>", font=("Helvetica", 14), fg="black")
-center_text_d.pack()
-center_text_g=Label(center_frame, text="<=", font=("Helvetica", 14), fg="black")
-center_text_g.pack()
-center_text_h=Label(center_frame, text="^", font=("Helvetica", 18), fg="black")
-center_text_h.pack()
-center_text_b=Label(center_frame, text="v", font=("Helvetica", 14), fg="black")
-center_text_b.pack()
+
+button_add = Button(center_frame, text="+", command=recup_add_data)
+button_add.pack()
+button_del = Button(center_frame, text="- ", command=recup_add_data)
+button_del.pack()
+button_up = Button(center_frame, text="^", command=recup_add_data)
+button_up.pack()
+button_down = Button(center_frame, text="v", command=recup_add_data)
+button_down.pack()
 center_frame.grid(row=0, column=1)
 
 
@@ -129,12 +132,11 @@ scrollbar_chosen_list.pack(side=RIGHT, fill=Y)
 
 listeChosenVideos = Listbox(list_of_chosen_vid_frame)
 listeChosenVideos.configure(width=60, height=35)
-listeChosenVideos.bind('<<ListboxSelect>>', OnSelectList)
+listeChosenVideos.bind('<<ListboxSelect>>', OnSelectChosenList)
 
-my_list=SQLManager.readAll()
-print("Ma liste dans VM "+str(my_list))
+my_list=[[1,'anot1'],[2,'anot2']]
 for item in my_list:
-    label_in_list=str(item[0])+" : >"+item[1]+"< Coté : >"+item[2]+"< Couleur : >"+item[3]+"< Longueur : >"+str(item[4])+"< Fichier : >"+item[5]+"< Date : >"+str(item[6])
+    label_in_list=str(item[0])+" : >"+item[1]
     listeChosenVideos.insert(item[0], label_in_list)
 
 # attach listbox to scrollbar

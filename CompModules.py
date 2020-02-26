@@ -10,7 +10,7 @@ def about_window():
     window_Ab.iconbitmap("pictures/likeBlack.ico")
     window_Ab.config(background='#FFFFFF')
 
-    top_title = Label(window_Ab, text="Functionnal Video Therapy V0.2",font=("Helvetica", 14), bg="white", fg="black");
+    top_title = Label(window_Ab, text="Functionnal Therapy POV V0.3",font=("Helvetica", 14), bg="white", fg="black");
     top_title.pack()
     phrase_recap = Label(window_Ab, text="\n\nDispositif expérimental sur une idée originale de Clément Varnier \n et "
                                          "développée par l'équipe d'innovation du CH Tullins :  \n[liste avec rôles dans"

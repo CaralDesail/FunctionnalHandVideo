@@ -168,7 +168,7 @@ def ValidateRightFrame():  # function called when Button in right frame is click
 # create first window
 window = Tk()
 
-window.title("Functionnal Video Therapy")
+window.title("Functionnal Therapy POV")
 # window.geometry("1080x720")
 window.minsize(1080, 720)
 window.iconbitmap("pictures/likeBlack.ico")
