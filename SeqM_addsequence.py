@@ -2,9 +2,31 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
 import SQLManager
+import SeqMClass
+
+liste_dynamique=SeqMClass.MySequence()
 
 def recup_add_data():
     print("Ajout des données dans la table SQL")
+
+def add_video():
+    video=SQLManager.find_vid_by_id(index_selected)
+    liste_dynamique.addToList(video)
+
+    RefreshChosenList(liste_dynamique.return_list())
+
+def del_video():
+    liste_dynamique.deleteFromList(chosen_index_selected)
+    RefreshChosenList(liste_dynamique.return_list())
+
+def up_video():
+    liste_dynamique.up(chosen_index_selected)
+    RefreshChosenList(liste_dynamique.return_list())
+
+
+def down_video():
+    liste_dynamique.down(chosen_index_selected)
+    RefreshChosenList(liste_dynamique.return_list())
 
 def OnSelectList(event):
     print("changement de liste"+str(event))
@@ -30,8 +52,23 @@ def SideAndColorChoseEvent(event): # when changes in color and side entry box, w
         label_in_list = str(item[0])+" : "+str(item[1]) +" : Longueur : " + str(item[4])
         listeVideos.insert(item[0], label_in_list)
 
-def OnSelectChosenList():
-    print("on selected item")
+def OnSelectChosenList(event):
+    print("changement de liste"+str(event))
+    w = event.widget
+    index = int(w.curselection()[0])
+    value = w.get(index)
+    print('You selected ', value, ' a l index ', index)
+    global chosen_index_selected
+    chosen_index_selected = index
+
+def RefreshChosenList(my_list):
+    print(my_list)
+    index=0
+    listeChosenVideos.delete(0,END)
+    for item in my_list:
+        index+=1
+        listeChosenVideos.insert(index, item)
+
 
 add_sequence = Tk()
 add_sequence.title("Module de création de séquences")
@@ -100,13 +137,13 @@ left_frame_t.grid(row=0, column=0)
 
 center_frame = Frame(items_frame, border=1)
 
-button_add = Button(center_frame, text="+", command=recup_add_data)
+button_add = Button(center_frame, text="+", command=add_video)
 button_add.pack()
-button_del = Button(center_frame, text="- ", command=recup_add_data)
+button_del = Button(center_frame, text="- ", command=del_video)
 button_del.pack()
-button_up = Button(center_frame, text="^", command=recup_add_data)
+button_up = Button(center_frame, text="^", command=up_video)
 button_up.pack()
-button_down = Button(center_frame, text="v", command=recup_add_data)
+button_down = Button(center_frame, text="v", command=down_video)
 button_down.pack()
 center_frame.grid(row=0, column=1)
 
@@ -134,7 +171,7 @@ listeChosenVideos = Listbox(list_of_chosen_vid_frame)
 listeChosenVideos.configure(width=60, height=35)
 listeChosenVideos.bind('<<ListboxSelect>>', OnSelectChosenList)
 
-my_list=[[1,'anot1'],[2,'anot2']]
+my_list=[[1,"Vide"]]
 for item in my_list:
     label_in_list=str(item[0])+" : >"+item[1]
     listeChosenVideos.insert(item[0], label_in_list)
