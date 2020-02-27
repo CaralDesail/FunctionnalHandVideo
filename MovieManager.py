@@ -1,4 +1,4 @@
-from moviepy.editor import *
+
 import os
 os.add_dll_directory(r'C:\Program Files\VideoLAN\VLC')
 from time import sleep
@@ -7,6 +7,7 @@ from time import sleep
 MoviePyUse=False
 if MoviePyUse: # we use moviepy
     import pygame
+    from moviepy.editor import *
 else : #we use vlc
     import vlc
 
@@ -14,6 +15,8 @@ else : #we use vlc
 
 
 def video_launch(file): # version of mediaplayer through vlc
+    print (file)
+
     if MoviePyUse:
         stringFile = "Videos/" + file
         clip = VideoFileClip(stringFile)
@@ -27,12 +30,15 @@ def video_launch(file): # version of mediaplayer through vlc
         stringFile = "Videos/" + file
         Media = Instance.media_new(stringFile)
         Media.get_mrl()
+        print("la valeur du get :",Media.get_mrl())
 
         player.set_media(Media)
         player.set_fullscreen(True)
         player.play() # launch player and file
         sleep(2)
         print(player.get_length())
+        if player.get_length()<=0:
+            print("Fichier non trouvé ou défaillant")
         while player.is_playing(): #wait until file's end
                 sleep(0.2)
         player.stop()

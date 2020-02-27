@@ -24,7 +24,7 @@ LeftSelectedAction = ""
 
 def video_management_opening():  # in menu
     print("Ouverture du gestionnaire de videos")
-    subprocess.call("python VideoManagementModule/VideoManagement.py")
+    subprocess.call("python VideoManagement.py")
      # call other windows that contain video manager
 
 def repertoire_videos():  # in menu
@@ -35,7 +35,7 @@ def repertoire_videos():  # in menu
 
 def sequences_management_opening(): #in menu, will call Sequences Management
     print("Ouverture du gestionnaire de séquences")
-    subprocess.call("python SequencesManagementModule/SequencesManagement.py")
+    subprocess.call("python SequencesManagement.py")
 
 def about_call(): #call a function in CompModules that will show a window with Credits
     CompModules.about_window()
@@ -53,12 +53,12 @@ def Side_Hand_Clic_Action(cote_Clic):
     global handSideClic
     if cote_Clic == "droite":  # if boolean right hand Clic then :
 
-        handSideClic = "r"
+        handSideClic = "d"
         Left_Hand_button.config(image=picture_left_hand_i)
         Right_Hand_button.config(image=picture_right_hand_a)
 
     else:
-        handSideClic = "l"
+        handSideClic = "g"
         Left_Hand_button.config(image=picture_left_hand_a)
         Right_Hand_button.config(image=picture_right_hand_i)
     Chose_Integrator()
@@ -66,7 +66,7 @@ def Side_Hand_Clic_Action(cote_Clic):
 
 def clic_yellow():
     global colorChoosen
-    colorChoosen = "y"
+    colorChoosen = "j"
     Color_Yellow_button.config(image=picture_Color_Yellow_a)
     Color_White_button.config(image=picture_Color_White_i)
     Color_Marron_button.config(image=picture_Color_Marron_i)
@@ -76,7 +76,7 @@ def clic_yellow():
 
 def clic_white():
     global colorChoosen
-    colorChoosen = "w"
+    colorChoosen = "b"
     Color_Yellow_button.config(image=picture_Color_Yellow_i)
     Color_White_button.config(image=picture_Color_White_a)
     Color_Marron_button.config(image=picture_Color_Marron_i)
@@ -96,7 +96,7 @@ def clic_marron():
 
 def clic_black():
     global colorChoosen
-    colorChoosen = "b"
+    colorChoosen = "n"
     Color_Yellow_button.config(image=picture_Color_Yellow_i)
     Color_White_button.config(image=picture_Color_White_i)
     Color_Marron_button.config(image=picture_Color_Marron_i)
@@ -168,7 +168,7 @@ def ValidateRightFrame():  # function called when Button in right frame is click
 # create first window
 window = Tk()
 
-window.title("Functionnal Video Therapy")
+window.title("Functionnal Therapy POV")
 # window.geometry("1080x720")
 window.minsize(1080, 720)
 window.iconbitmap("pictures/likeBlack.ico")

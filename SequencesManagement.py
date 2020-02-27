@@ -21,12 +21,12 @@ def OnSelectList(event):
 
 
 def add_sequence():
-    subprocess.call("python VideoManagementModule/addsequence.py")
+    subprocess.call("python SeqM_addsequence.py")
 
 def mod_sequence():
     print("mod video")
     global index_selected
-    subprocess.call(['python', 'VideoManagementModule/modsequence.py', index_selected])
+    subprocess.call(['python', 'SeqM_modsequence.py', index_selected])
 
 def del_sequence():
     global index_selected
@@ -74,12 +74,12 @@ scrollbar.config(command=listeSequences.yview)
 buttons_frame = Frame(windowSM, bg="#FFFFFF", border=1)
 
 add_button_frame=Frame(buttons_frame,padx=20)
-add_button = Button(add_button_frame, text="Ajouter", border=1,font=("Helvetica", 12),command=add_sequence);
+add_button = Button(add_button_frame, text="Nouvelle séquence", border=1,font=("Helvetica", 12),bg="#FFA8A8",command=add_sequence);
 add_button_frame.grid(row=0, column=0)
 add_button.pack()
 
 modify_button_frame=Frame(buttons_frame,padx=20)
-modify_button = Button(modify_button_frame, text="Modifier", border=1,font=("Helvetica", 12),command=mod_sequence);
+modify_button = Button(modify_button_frame, text="Modifier", border=1,font=("Helvetica", 12),bg="#FFA8A8",command=mod_sequence);
 modify_button_frame.grid(row=0, column=1)
 modify_button.pack()
 
