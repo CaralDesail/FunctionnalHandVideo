@@ -74,22 +74,22 @@ scrollbar.config(command=listeSequences.yview)
 buttons_frame = Frame(windowSM, bg="#FFFFFF", border=1)
 
 add_button_frame=Frame(buttons_frame,padx=20)
-add_button = Button(add_button_frame, text="Nouvelle séquence", border=1,font=("Helvetica", 12),bg="#FFA8A8",command=add_sequence);
+add_button = Button(add_button_frame, text="Nouvelle séquence", border=1,font=("Helvetica", 12),bg="#2ECC71",command=add_sequence);
 add_button_frame.grid(row=0, column=0)
 add_button.pack()
 
 modify_button_frame=Frame(buttons_frame,padx=20)
-modify_button = Button(modify_button_frame, text="Modifier", border=1,font=("Helvetica", 12),bg="#FFA8A8",command=mod_sequence);
+modify_button = Button(modify_button_frame, text="Modifier", border=1,font=("Helvetica", 12),bg="#EBEBEB",command=mod_sequence);
 modify_button_frame.grid(row=0, column=1)
 modify_button.pack()
 
 delete_button_frame=Frame(buttons_frame,padx=20)
-delete_button = Button(delete_button_frame, text="Supprimer", border=1,font=("Helvetica", 12),command=del_sequence);
+delete_button = Button(delete_button_frame, text="Supprimer", border=1,font=("Helvetica", 12),bg="#922B21",command=del_sequence);
 delete_button_frame.grid(row=0, column=2)
 delete_button.pack()
 
 refresh_button_frame=Frame(buttons_frame,padx=20)
-refresh_button = Button(refresh_button_frame, text="Actualiser", border=1,font=("Helvetica", 12),command=ref_sequence);
+refresh_button = Button(refresh_button_frame, text="Actualiser", border=1,font=("Helvetica", 12),bg="#F4D03F",command=ref_sequence);
 refresh_button_frame.grid(row=0, column=3)
 refresh_button.pack()
 

@@ -9,6 +9,8 @@ class MySequence:
         self.caracteristique = "liste"
         self.name="NoName"
         self.totallist=[]
+        self.actionList=[]
+        self.length=int(0)
 
     def new_name(self,nname): #function what will change the name of current list
         self.name=nname
@@ -34,21 +36,25 @@ class MySequence:
     def return_list(self):
         return(self.totallist)
 
-mysequence=MySequence()
-print(mysequence.name)
-mysequence.new_name("Ma séquence")
-print(mysequence.name)
-print(mysequence.totallist)
-mysequence.addToList([1,1,2])
-mysequence.addToList([2,2,3])
-mysequence.addToList([5,5,7])
-print(mysequence.totallist)
-mysequence.up(1)
-print(mysequence.totallist)
-mysequence.up(2)
-print(mysequence.totallist)
-print("puis down")
-mysequence.down(0)
-print(mysequence.totallist)
-mysequence.down(1)
-print(mysequence.totallist)
+    def generate_actionlist_from_list(self):
+        self.actionList=[]
+        for item in self.totallist:
+            self.actionList.append(item[0][1])
+        return (self.actionList)
+
+    def calcul_total_len(self):
+        self.length=0
+        for item in self.totallist:
+            self.length+=int(item[0][4])
+        return (self.length)
+
+    def TotalToSql(self, name, side, color):
+
+        localactionList=self.generate_actionlist_from_list()
+
+        print('le nom:',name,' le cote ', side, 'la couleur ' , color)
+        print ('et la liste', localactionList)
+
+        print('et la longueur est',self.length)
+        SQLManager.ajout_dyn_sequence(name,color,side,str(self.length),localactionList)
+

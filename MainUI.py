@@ -1,6 +1,6 @@
 """
  * Functionnal Video Therapy
- * Version - 0.2
+ * Version - 0.3
  * All right reserved
  *
  * Copyright (c) 2019 Alain Carrot for the coding part,
