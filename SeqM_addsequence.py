@@ -1,22 +1,27 @@
 from tkinter import *
 from tkinter import messagebox
+from tkinter.filedialog import *
 from tkinter import ttk
 import SQLManager
 import SeqMClass
+import MovieManager
 
-liste_dynamique=SeqMClass.MySequence()
+liste_dynamique=SeqMClass.MySequence() #name of local object
 
-def recup_add_data():
-    print("Ajout des données dans la table SQL")
 
 def add_video():
     video=SQLManager.find_vid_by_id(index_selected)
     liste_dynamique.addToList(video)
 
+    newduree="          Durée : "+str(liste_dynamique.calcul_total_len())
+    texte_duree.config(text=newduree)
     RefreshChosenList(liste_dynamique.return_list())
 
 def del_video():
     liste_dynamique.deleteFromList(chosen_index_selected)
+
+    newduree="          Durée : "+str(liste_dynamique.calcul_total_len())
+    texte_duree.config(text=newduree)
     RefreshChosenList(liste_dynamique.return_list())
 
 def up_video():
@@ -53,7 +58,6 @@ def SideAndColorChoseEvent(event): # when changes in color and side entry box, w
         listeVideos.insert(item[0], label_in_list)
 
 def OnSelectChosenList(event):
-    print("changement de liste"+str(event))
     w = event.widget
     index = int(w.curselection()[0])
     value = w.get(index)
@@ -62,13 +66,35 @@ def OnSelectChosenList(event):
     chosen_index_selected = index
 
 def RefreshChosenList(my_list):
-    print(my_list)
+    #print(my_list)
     index=0
     listeChosenVideos.delete(0,END)
     for item in my_list:
         index+=1
         listeChosenVideos.insert(index, item)
 
+def Call_for_SQL_Insertion():
+    side=left_frame_value_side.get()
+    color=left_frame_value_color.get()
+    title=right_frame_value_title.get()
+
+    if side!=""and color!=""and title!="":
+        liste_dynamique.TotalToSql(title,side,color)
+        messagebox.showinfo("Info","Sequence ajoutée")
+        add_sequence.quit()
+    else :
+        messagebox.showerror("Erreur de remplissage","Remplissez bien tous les champs, dont le titre")
+
+def Test_List_To_Video():
+    list_videos_to_test=liste_dynamique.return_list()
+    tests_passed=True
+    # here, write the tests and modify message box ... (to check ie that every color is the same ... )
+    if messagebox.askokcancel("Rapport",message="Sequence Valide (ou non pour l'instant). Voulez vous la jouer ? "):
+            list_adresses=[]
+            for item in list_videos_to_test:
+                list_adresses.append('/Videos/'+item[0][5])
+            print(list_adresses)
+            MovieManager.multiple_different_videos(list_adresses)
 
 add_sequence = Tk()
 add_sequence.title("Module de création de séquences")
@@ -193,12 +219,12 @@ spacer.pack()
 
 buttons_frame=Frame(add_sequence,border=1)
 button_val_t=Frame(buttons_frame,padx=20)
-button_val = Button(button_val_t, text="Valider", command=recup_add_data)
+button_val = Button(button_val_t, text="Valider", command=Call_for_SQL_Insertion)
 button_val.pack()
 button_val_t.grid(row=0,column=0)
 
 button_test_t=Frame(buttons_frame,padx=20)
-button_test= Button(button_test_t, text="Test")
+button_test= Button(button_test_t, text="Test", command=Test_List_To_Video)
 button_test.pack()
 button_test_t.grid(row=0,column=1)
 
@@ -206,6 +232,9 @@ button_dismiss_t=Frame(buttons_frame,padx=20)
 button_dismiss = Button(button_dismiss_t, text="Annuler", command=add_sequence.destroy)
 button_dismiss.pack()
 button_dismiss_t.grid(row=0,column=2)
+
+texte_duree = Label(buttons_frame, text="                  Durée = ", font=("Helvetica", 12), fg="black");
+texte_duree.grid(row=0,column=3)
 
 buttons_frame.pack()
 

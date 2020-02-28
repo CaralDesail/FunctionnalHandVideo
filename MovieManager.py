@@ -23,7 +23,7 @@ def video_launch(file): # version of mediaplayer through vlc
         clip.preview(fullscreen=True)
         pygame.quit()
 
-    else:
+    else: # if vlc is used
 
         Instance = vlc.Instance()
         player = Instance.media_player_new()
@@ -67,14 +67,16 @@ def multiple_different_videos(listOfFiles):  # plays a list in order (automatic 
                 sleep(0.001)
                 # print("longueur du clip : ",player.get_length()," numéro du clip : ", i)
                 play_state = player.get_state()
+                print('l etat est : ',play_state)
                 if play_state in playing:
                     if ((i + 1) == len(my_list)):  # if it's the last clip of the list
                         sleep(1)  # wait the last video to be initialised
                         print("dernier clip, processus de fin initialisé")
                         sleep((player.get_length() / 1000) - 1)  # wait the last clip to be played
                         print("fin du dernier clip")
-                        player.stop()  # kills player
+                        player.stop()  # stop player
                         play = False  # and stop while loop
+
                     continue
                 else:
                     play = False

@@ -1,8 +1,26 @@
 from tkinter import *
-from tkinter import messagebox
+from tkinter import messagebox, filedialog
 from tkinter import ttk
 import SQLManager
 import subprocess
+from moviepy.editor import VideoFileClip
+
+def find_file_to_add():
+    file_selected=filedialog.askopenfilename(title = "Selecttionnez le fichier",filetypes = (("mpeg files","*.mp4"),("all files","*.*")))
+    # dialogue box where user will select the file to add
+    print("Find the file : ",file_selected) #catch the entire line
+    liste_of_filepath=file_selected.split("/") #catch the name of file
+    filename=liste_of_filepath[-1] #take it
+    filename_frame_value.delete(0, END)
+    filename_frame_value.insert(0, filename) #and fulfill the field
+
+    length_frame_value.delete(0,END)#... the same for duration
+    clip = VideoFileClip(file_selected)  # using VideoFileClip that is to say moviepy (on pygame)
+    clip_length=clip.duration
+    clip.close() # close the file reading to avoid exception.
+    length_frame_value.insert(0, clip_length)
+
+
 
 def recup_add_data(): # function that will use tkinter input to feed SQL database trougth SQLManager after check
     name = name_frame_value.get()
@@ -81,11 +99,21 @@ filename_frame_value = Entry(filename_frame_t, width=30)
 filename_frame_value.pack()
 filename_frame_t.grid(row=0, column=4)
 
+spacer = Label(add_video, text="", font=("Helvetica", 10), fg="black");
+spacer.pack()
+
+button_find_video = Button(add_video, text="Chercher le fichier", command=find_file_to_add)
+button_find_video.pack()
+
+spacer = Label(add_video, text="", font=("Helvetica", 10), fg="black");
+spacer.pack()
+
 button_val = Button(add_video, text="Valider", command=recup_add_data)
 button_val.pack()
 
 spacer = Label(add_video, text="", font=("Helvetica", 10), fg="black");
 spacer.pack()
+
 button_dismiss = Button(add_video, text="Annuler", command=add_video.destroy)
 button_dismiss.pack()
 
