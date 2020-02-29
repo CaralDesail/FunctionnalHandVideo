@@ -20,7 +20,7 @@ handSideClic = "0"
 colorChoosen = "0"
 list_indiv_combobox = ["Selectionnez une action", "Pen", "Spoon", "Cut", "Piano"]
 LeftSelectedAction = ""
-
+#
 
 def video_management_opening():  # in menu
     print("Ouverture du gestionnaire de videos")
