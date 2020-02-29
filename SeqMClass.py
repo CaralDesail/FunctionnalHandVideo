@@ -22,6 +22,7 @@ class MySequence:
     def deleteFromList(self,id_of_item):
         self.totallist.pop(id_of_item)
 
+
     def up(self,id_to_up):
         previous_id=id_to_up-1
         self.totallist[previous_id], self.totallist[id_to_up]=self.totallist[id_to_up], self.totallist[previous_id]
