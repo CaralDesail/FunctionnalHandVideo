@@ -1,11 +1,12 @@
 """
  * Functionnal Video Therapy
- * Version - 0.3
+ * Version - 0.35
  * All right reserved
  *
  * Copyright (c) 2019 Alain Carrot for the coding part,
  * Tullins's innovation team for the concept.
  */
+ * WARNING : This is the Integration One File branch in git that aim to avoid subprocesses that makes the distrib complex
 """
 
 from tkinter import *
@@ -15,6 +16,8 @@ import os
 import MovieManager
 import subprocess
 import CompModules
+import VideoManagement
+import SequencesManagement
 
 handSideClic = "0"
 colorChoosen = "0"
@@ -22,10 +25,13 @@ list_indiv_combobox = ["Selectionnez une action", "Pen", "Spoon", "Cut", "Piano"
 LeftSelectedAction = ""
 
 
+
 def video_management_opening():  # in menu
     print("Ouverture du gestionnaire de videos")
-    subprocess.call("python VideoManagement.py")
      # call other windows that contain video manager
+    window.iconify()
+    VideoManagement.Main_VideoManagement_Window()
+
 
 def repertoire_videos():  # in menu
     print("ouverture du repertoire des videos")
@@ -35,7 +41,8 @@ def repertoire_videos():  # in menu
 
 def sequences_management_opening(): #in menu, will call Sequences Management
     print("Ouverture du gestionnaire de séquences")
-    subprocess.call("python SequencesManagement.py")
+    window.iconify()
+    SequencesManagement.Main_SequenceManagement_Window()
 
 def about_call(): #call a function in CompModules that will show a window with Credits
     CompModules.about_window()
