@@ -261,3 +261,4 @@ def delete_seq(id_of_object):  # will add new entry in database
     connection.commit()
     connection.close()
 
+
