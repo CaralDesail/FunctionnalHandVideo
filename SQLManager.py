@@ -117,7 +117,7 @@ def tri_and_title(side, color):
 
 # tri_and_title("l","w")
 
-def retrive_video_path(action, side, color): #find the pâth of a video according to actionname, side and color
+def retrive_video_path(action, side, color): #find the  video (and path) according to actionname, side and color
     ActionChosen = action
     HandSide = side
     HandColor = color

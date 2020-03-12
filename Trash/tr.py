@@ -1,31 +1,56 @@
-liste_dynamique = SeqMClass.MySequence()  # name of local object
+liste_dynamique_mod = SeqMClass.MySequence()  # name of local object
+
+
+def recup_spec_seq_Id():
+    # print("Récupération des infos")
+    global index_selected_int
+    data_of_seq = SQLManager.spec_from_id(index_selected_int)
+    # print("Et importé dans mod_sequence",data_of_seq)
+    return data_of_seq
+
+
+def feed_fields_from_db():
+    info_chain = recup_spec_seq_Id()  # call the function that will grab informations of sequences from database
+    print("La liste récupérée contient : ", info_chain)
+    # feed of different fields:
+    right_frame_value_title.insert(0, info_chain[0][1])
+    left_frame_value_side.insert(0, info_chain[0][3])
+    left_frame_value_color.insert(0, info_chain[0][2])
+
+    # recalculate what to show in left list of videos
+    listeVideos.delete(0, END)
+    list_to_show = SQLManager.tri_and_title(info_chain[0][3], info_chain[0][2])
+    print(list_to_show)
+    for item in list_to_show:
+        label_in_list = str(item[0]) + " : " + str(item[1]) + " : Longueur : " + str(item[4])
+        listeVideos.insert(item[0], label_in_list)
 
 
 def add_video():
     video = SQLManager.find_vid_by_id(index_selected)
-    liste_dynamique.addToList(video)
+    liste_dynamique_mod.addToList(video)
 
-    newduree = "          Durée : " + str(liste_dynamique.calcul_total_len())
+    newduree = "          Durée : " + str(liste_dynamique_mod.calcul_total_len())
     texte_duree.config(text=newduree)
-    RefreshChosenList(liste_dynamique.return_list())
+    RefreshChosenList(liste_dynamique_mod.return_list())
 
 
 def del_video():
-    liste_dynamique.deleteFromList(chosen_index_selected)
+    liste_dynamique_mod.deleteFromList(chosen_index_selected)
 
-    newduree = "          Durée : " + str(liste_dynamique.calcul_total_len())
+    newduree = "          Durée : " + str(liste_dynamique_mod.calcul_total_len())
     texte_duree.config(text=newduree)
-    RefreshChosenList(liste_dynamique.return_list())
+    RefreshChosenList(liste_dynamique_mod.return_list())
 
 
 def up_video():
-    liste_dynamique.up(chosen_index_selected)
-    RefreshChosenList(liste_dynamique.return_list())
+    liste_dynamique_mod.up(chosen_index_selected)
+    RefreshChosenList(liste_dynamique_mod.return_list())
 
 
 def down_video():
-    liste_dynamique.down(chosen_index_selected)
-    RefreshChosenList(liste_dynamique.return_list())
+    liste_dynamique_mod.down(chosen_index_selected)
+    RefreshChosenList(liste_dynamique_mod.return_list())
 
 
 def OnSelectList(event):
@@ -80,7 +105,7 @@ def Call_for_SQL_Insertion():
     title = right_frame_value_title.get()
 
     if side != "" and color != "" and title != "":
-        liste_dynamique.TotalToSql(title, side, color)
+        liste_dynamique_mod.TotalToSql(title, side, color)
         messagebox.showinfo("Info", "Sequence ajoutée")
         ref_sequence()
         mod_sequence.destroy()
@@ -89,7 +114,7 @@ def Call_for_SQL_Insertion():
 
 
 def Test_List_To_Video():
-    list_videos_to_test = liste_dynamique.return_list()
+    list_videos_to_test = liste_dynamique_mod.return_list()
     tests_passed = True
     # here, write the tests and modify message box ... (to check ie that every color is the same ... )
     if messagebox.askokcancel("Rapport",
@@ -102,14 +127,14 @@ def Test_List_To_Video():
 
 
 mod_sequence = Tk()
-mod_sequence.title("Module de création de séquences")
+mod_sequence.title("Module de modification de séquences")
 # window.geometry("1080x720")
 mod_sequence.minsize(1080, 720)
 mod_sequence.maxsize(1080, 720)
 mod_sequence.iconbitmap("pictures/likeBlack.ico")
 mod_sequence.config(background='#FFFFFF')
 
-Titre_ajouter = Label(mod_sequence, text="Ajout d'une nouvelle séquence", font=("Helvetica", 14), bg="white",
+Titre_ajouter = Label(mod_sequence, text="Modification de la séquence", font=("Helvetica", 14), bg="white",
                       fg="black");
 Titre_ajouter.pack()
 
@@ -242,6 +267,8 @@ texte_duree = Label(buttons_frame, text="                  Durée = ", font=("He
 texte_duree.grid(row=0, column=3)
 
 buttons_frame.pack()
+
+feed_fields_from_db()  # call the corresponding function that will fullfill fields from SQLDataBase
 
 mod_sequence.mainloop()
 ref_sequence()

@@ -32,7 +32,7 @@ class MySequence:
         self.totallist[following_id], self.totallist[id_to_dw]=self.totallist[id_to_dw], self.totallist[following_id]
 
     def show_list(self):
-        print(self.totallist)
+        print("Voici la liste : ",self.totallist)
 
     def return_list(self):
         return(self.totallist)
@@ -42,6 +42,15 @@ class MySequence:
         for item in self.totallist:
             self.actionList.append(item[0][1])
         return (self.actionList)
+
+    def generate_list_from_actionlist(self, actionlist,side,color):
+        print("Process de génération de la liste : ",actionlist)
+        listofactions=actionlist.split(';')
+        for act in listofactions: #for the different actions , will retrive the total spec of vid and add it to list
+            tempIt=SQLManager.retrive_video_path(act,side,color)
+            self.addToList(tempIt)
+            print("item temporaire : ",tempIt)
+
 
     def calcul_total_len(self):
         self.length=0
