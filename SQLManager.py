@@ -171,8 +171,9 @@ def find_by_id_to_filename_list(list_of_actions,side, color): #takes the list of
 def spec_from_id(id):
     connection = sqlite3.connect("video_db.db")
     cursor = connection.cursor()
-    cursor.execute(("SELECT * FROM list_of_sequences WHERE id_sequence ==? "),
+    cursor.execute(("SELECT * FROM list_of_sequences WHERE id_sequence ==%s ")%
                    (id))
+
     result = cursor.fetchall()
     for r in result:
        print("Depuis module SQLMan: ",r)
@@ -252,9 +253,11 @@ def delete_seq(id_of_object):  # will add new entry in database
     connection = sqlite3.connect("video_db.db")
     cursor = connection.cursor()
 
-    format_str = """DELETE FROM list_of_sequences WHERE id_sequence=?"""
+    format_str = """DELETE FROM list_of_sequences WHERE id_sequence=%s"""
 
-    cursor.execute(format_str, (id_of_object,))
+
+    cursor.execute(format_str%(id_of_object,))
     print("Suppression de l'item n°",id_of_object)
     connection.commit()
     connection.close()
+

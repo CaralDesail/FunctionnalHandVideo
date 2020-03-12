@@ -21,7 +21,7 @@ import SequencesManagement
 
 handSideClic = "0"
 colorChoosen = "0"
-list_indiv_combobox = ["Selectionnez une action", "Pen", "Spoon", "Cut", "Piano"]
+list_indiv_combobox = ["Selectionnez une action", "Selectionnez d'abord une couleur / côté"]
 LeftSelectedAction = ""
 #
 

@@ -265,7 +265,9 @@ def Main_SequenceManagement_Window():
         def recup_spec_seq_Id(): #will thanks to ID catch all the other caract of sequence entry
             # print("Récupération des infos")
             global index_selected_int
+            print("appel final Id dans le SQL Manager : ", index_selected_int)
             data_of_seq = SQLManager.spec_from_id(index_selected_int)
+
             # print("Et importé dans mod_sequence",data_of_seq)
             return data_of_seq
 
@@ -357,6 +359,9 @@ def Main_SequenceManagement_Window():
                 listeChosenVideos.insert(index, item)
 
         def Call_for_SQL_Mod():
+            global index_selected_int
+            SQLManager.delete_seq(index_selected_int)
+
             side = left_frame_value_side.get()
             color = left_frame_value_color.get()
             title = right_frame_value_title.get()
