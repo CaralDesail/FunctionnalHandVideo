@@ -168,6 +168,17 @@ def find_by_id_to_filename_list(list_of_actions,side, color): #takes the list of
 #################################
 #################################
 
+def spec_from_id(id):
+    connection = sqlite3.connect("video_db.db")
+    cursor = connection.cursor()
+    cursor.execute(("SELECT * FROM list_of_sequences WHERE id_sequence ==? "),
+                   (id))
+    result = cursor.fetchall()
+    for r in result:
+       print("Depuis module SQLMan: ",r)
+    return result
+    connection.close()
+
 def retrive_sequence(sequence_name, side, color): #find the pâth of a video according to actionname, side and color
     HandSide = side
     HandColor = color
