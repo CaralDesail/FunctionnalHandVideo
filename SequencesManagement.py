@@ -585,7 +585,7 @@ def Main_SequenceManagement_Window():
     add_button.pack()
 
     modify_button_frame=Frame(buttons_frame,padx=20)
-    modify_button = Button(modify_button_frame, text="Modifier", border=1,font=("Helvetica", 12),bg="#EBEBEB",command=mod_sequence);
+    modify_button = Button(modify_button_frame, text="Modifier", border=1,font=("Helvetica", 12),bg="#F4D03F",command=mod_sequence);
     modify_button_frame.grid(row=0, column=1)
     modify_button.pack()
 
@@ -595,7 +595,7 @@ def Main_SequenceManagement_Window():
     delete_button.pack()
 
     refresh_button_frame=Frame(buttons_frame,padx=20)
-    refresh_button = Button(refresh_button_frame, text="Actualiser", border=1,font=("Helvetica", 12),bg="#F4D03F",command=ref_sequence);
+    refresh_button = Button(refresh_button_frame, text="Actualiser", border=1,font=("Helvetica", 12),command=ref_sequence);
     refresh_button_frame.grid(row=0, column=3)
     refresh_button.pack()
 

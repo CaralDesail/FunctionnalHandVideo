@@ -168,6 +168,22 @@ def Main_VideoManagement_Window():
 
         indexSel=indexSelPasse
 
+        def find_file_to_add():
+            file_selected = filedialog.askopenfilename(title="Selectionnez le fichier",
+                                                       filetypes=(("mpeg files", "*.mp4"), ("all files", "*.*")))
+            # dialogue box where user will select the file to add
+            print("Find the file : ", file_selected)  # catch the entire line
+            liste_of_filepath = file_selected.split("/")  # catch the name of file
+            filename = liste_of_filepath[-1]  # take it
+            filename_frame_value.delete(0, END)
+            filename_frame_value.insert(0, filename)  # and fulfill the field
+
+            length_frame_value.delete(0, END)  # ... the same for duration
+            clip = VideoFileClip(file_selected)  # using VideoFileClip that is to say moviepy (on pygame)
+            clip_length = clip.duration
+            clip.close()  # close the file reading to avoid exception.
+            length_frame_value.insert(0, clip_length)
+
         def recup_mod_data():  # function that will use tkinter input to feed SQL database trougth SQLManager after check
             name = name_frame_value.get()
             side = side_frame_value.get()
@@ -199,6 +215,7 @@ def Main_VideoManagement_Window():
         mod_video.minsize(800, 300)
         mod_video.iconbitmap("pictures/likeBlack.ico")
         mod_video.config(background='#FFFFFF')
+        mod_video.attributes('-topmost', True)
 
         Titre_ajouter = Label(mod_video, text="Ajouter", font=("Helvetica", 14), bg="white", fg="black");
         Titre_ajouter.pack()
@@ -244,6 +261,10 @@ def Main_VideoManagement_Window():
         button_val = Button(mod_video, text="Valider", command=recup_mod_data)
         button_val.pack()
 
+        spacer = Label(mod_video, text="", font=("Helvetica", 10), fg="black");
+        spacer.pack()
+        button_find_video = Button(mod_video, text="Chercher le fichier", command=find_file_to_add)
+        button_find_video.pack()
         spacer = Label(mod_video, text="", font=("Helvetica", 10), fg="black");
         spacer.pack()
         button_dismiss = Button(mod_video, text="Annuler", command=mod_video.destroy)
@@ -294,17 +315,17 @@ def Main_VideoManagement_Window():
     buttons_frame = Frame(windowVM, bg="#FFFFFF", border=1)
 
     add_button_frame=Frame(buttons_frame,padx=20)
-    add_button = Button(add_button_frame, text="Ajouter", border=1,font=("Helvetica", 12),command=ADD_VM_Window);
+    add_button = Button(add_button_frame, text="Ajouter", border=1,font=("Helvetica", 12),bg="#2ECC71",command=ADD_VM_Window);
     add_button_frame.grid(row=0, column=0)
     add_button.pack()
 
     modify_button_frame=Frame(buttons_frame,padx=20)
-    modify_button = Button(modify_button_frame, text="Modifier", border=1,font=("Helvetica", 12),command=mod_video);
+    modify_button = Button(modify_button_frame, text="Modifier", border=1,font=("Helvetica", 12),bg="#F4D03F",command=mod_video);
     modify_button_frame.grid(row=0, column=1)
     modify_button.pack()
 
     delete_button_frame=Frame(buttons_frame,padx=20)
-    delete_button = Button(delete_button_frame, text="Supprimer", border=1,font=("Helvetica", 12),command=del_video);
+    delete_button = Button(delete_button_frame, text="Supprimer", border=1,font=("Helvetica", 12),bg="#922B21",command=del_video);
     delete_button_frame.grid(row=0, column=2)
     delete_button.pack()
 
@@ -314,7 +335,7 @@ def Main_VideoManagement_Window():
     refresh_button.pack()
 
     play_button_frame=Frame(buttons_frame,padx=20)
-    play_button = Button(play_button_frame, text="Jouer", border=1,font=("Helvetica", 12),command=play_video);
+    play_button = Button(play_button_frame, text="Jouer", border=1,font=("Helvetica", 12),bg="#6CADFF",command=play_video);
     play_button_frame.grid(row=0, column=4)
     play_button.pack()
 
@@ -324,3 +345,6 @@ def Main_VideoManagement_Window():
 
     windowVM.mainloop()
 
+
+if __name__ == '__main__': # will call following function if the window is called directly (and not from soft main screen)
+    Main_VideoManagement_Window()

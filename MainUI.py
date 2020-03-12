@@ -1,6 +1,6 @@
 """
  * Functionnal Video Therapy
- * Version - 0.35
+ * Version - 0.6
  * All right reserved
  *
  * Copyright (c) 2019 Alain Carrot for the coding part,
@@ -43,6 +43,11 @@ def sequences_management_opening(): #in menu, will call Sequences Management
     print("Ouverture du gestionnaire de séquences")
     window.iconify()
     SequencesManagement.Main_SequenceManagement_Window()
+
+def db_check():
+    print("Ouverture de l'outil d'analyse")
+    window.iconify()
+    CompModules.DBTest_Window()
 
 def about_call(): #call a function in CompModules that will show a window with Credits
     CompModules.about_window()
@@ -148,7 +153,10 @@ def right_combo_action(event):
     global RightSelectedAction
     RightSelectedAction = right_frame_combobox.get()
     Sequence_Chosen = SQLManager.retrive_sequence(RightSelectedAction, handSideClic, colorChoosen)  # retrive spec of chosen seq
+
     sec_to_min=Sequence_Chosen[0][4]/60 #convert to min
+    sec_to_min=format(sec_to_min,'.1f') #takes only one digit after comma
+
     duration = "Durée : "+str(sec_to_min)+" min" #convert in a string
     scheme=Sequence_Chosen[0][5] #will retrive the scheme / An other function to factorise the sheme would be interesting to develop
 #insert here the changes in text fields.
@@ -308,9 +316,10 @@ Right_Frame_button.pack()
 menu_bar = Menu(window)
 # creer premier menu
 file_menu = Menu(menu_bar, tearoff=0)
+file_menu.add_command(label="Gestion des séquences", command=sequences_management_opening)
 file_menu.add_command(label="Gestion des videos", command=video_management_opening)
 file_menu.add_command(label="Répertoire des vidéos", command=repertoire_videos)
-file_menu.add_command(label="Gestion des Séquences", command=sequences_management_opening)
+file_menu.add_command(label="Verification de la base", command=db_check)
 
 aide_menu = Menu(menu_bar, tearoff=0)
 aide_menu.add_command(label="Manuel d'utilisateur")

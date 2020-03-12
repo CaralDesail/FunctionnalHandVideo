@@ -196,7 +196,7 @@ def retrive_sequence(sequence_name, side, color): #find the pâth of a video acc
 
 #retrive_sequence("2Styl","r","w")
 
-def list_of_sequence():  # find the pâth of a video according to actionname, side and color
+def list_of_sequence():  # find all sequences
 
     connection = sqlite3.connect("video_db.db")
     cursor = connection.cursor()

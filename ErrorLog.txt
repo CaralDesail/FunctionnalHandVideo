@@ -1,0 +1,3 @@
+Tous les fichiers correspondants aux vidéos de la base de donnée ont été trouvés.
+
+Toutes les vidéos appelées par les différentes séquences sont présentes dans la DB.
