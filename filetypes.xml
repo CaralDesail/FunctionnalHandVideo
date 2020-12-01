@@ -1,6 +1,7 @@
 <application>
   <component name="FileTypeManager" version="17">
     <extensionMap>
+      <mapping ext="sqlite3" type="Native" />
       <mapping ext="db" type="Native" />
       <mapping pattern="exo" type="PLAIN_TEXT" />
     </extensionMap>
